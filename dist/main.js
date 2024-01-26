@@ -1,0 +1,1 @@
+(()=>{"use strict";class s{}new s,new s})();
