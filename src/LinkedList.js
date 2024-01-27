@@ -68,6 +68,16 @@ export default class LinkedList {
     return null;
   }
 
+  getKeys() {
+    let node = this.head;
+    let keyArray = [];
+    while (node !== null) {
+      keyArray.push(node.data.key);
+      node = node.next;
+    }
+    return keyArray;
+  }
+
   getValues() {
     let node = this.head;
     let valueArray = [];

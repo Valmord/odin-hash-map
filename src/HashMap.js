@@ -80,6 +80,16 @@ export default class HashMap {
     }
   }
 
+  keys() {
+    let keys = [];
+    this.buckets.forEach((bucket) => {
+      if (bucket !== null) {
+        keys = keys.concat(bucket.getKeys());
+      }
+    });
+    return keys;
+  }
+
   values() {
     let valueArray = [];
     this.buckets.forEach((bucket) => {

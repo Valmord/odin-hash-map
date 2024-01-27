@@ -31,6 +31,7 @@ map.set("nod", 800);
 console.log("Adding nod again with different value..");
 console.log("get nod value:", map.get("nod"));
 
+console.log("hashmap keys:", map.keys());
 console.log("hashmap values:", map.values());
 console.log("hashmap entries:");
 console.table(map.entries());
