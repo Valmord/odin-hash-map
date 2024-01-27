@@ -5,22 +5,18 @@ export default class LinkedList {
   tail = null;
   size = 0;
 
-  set head(node) {
-    this.head = node;
-    return node;
-  }
-
-  get head() {
-    return this.head;
-  }
-
-  get tail() {
-    return this.tail;
-  }
-
-  set tail(node) {
-    this.tail = node;
-    return node;
+  add(valuePair) {
+    if (this.size > 0) {
+      let node = this.head;
+      while (node !== null) {
+        if (node.data.key === valuePair.key) {
+          node.data.value = valuePair.value;
+          return node;
+        }
+        node = node.next;
+      }
+    }
+    this.append(valuePair);
   }
 
   append(value) {
@@ -38,34 +34,77 @@ export default class LinkedList {
     this.size += 1;
   }
 
-  at(index) {
-    if (index > this.size) return "Index cannot exceed list size";
+  get(key) {
     let node = this.head;
-    for (let i = 0; i <= index; i++) {
-      if (index === i) return node;
-      node = node.next;
-    }
-  }
-
-  find(value) {
-    let node = this.head;
-    let count = 0;
     while (node !== null) {
-      if (node.data === value) return count;
+      if (key === node.data.key) return node.data.value;
       node = node.next;
-      count += 1;
     }
     return null;
   }
 
+  has(key) {
+    return this.get(key) !== null;
+  }
+
+  remove(key) {
+    let node = this.head;
+    if (node.data.key === key) {
+      let tmp = node;
+      this.head = node.next;
+      this.size -= 1;
+      return tmp;
+    }
+
+    let priorNode = null;
+    while (node !== null) {
+      if (node.data.key === key) {
+        priorNode.next = node.next;
+        return node;
+      }
+      [priorNode, node] = [node, node.next];
+      this.size -= 1;
+    }
+    return null;
+  }
+
+  getValues() {
+    let node = this.head;
+    let valueArray = [];
+    while (node !== null) {
+      valueArray.push(node.data.value);
+      node = node.next;
+    }
+    return valueArray;
+  }
+
+  getEntries() {
+    let node = this.head;
+    let entriesArray = [];
+    while (node !== null) {
+      entriesArray.push([node.data.key, node.data.value]);
+      node = node.next;
+    }
+    return entriesArray;
+  }
+
   pop() {
+    if (this.size === 0) return null;
+    if (this.size === 1) {
+      const tmp = this.head;
+      this.head = null;
+      this.tail = null;
+      this.size -= 1;
+      return tmp;
+    }
+
     let node = this.head;
     while (node.next !== this.tail) {
       node = node.next;
     }
     const tmp = this.tail;
-    [this.tail, node.next] = [node, null];
-
+    [node, this.tail] = [null, node];
+    this.size -= 1;
     return tmp;
   }
 
@@ -78,30 +117,6 @@ export default class LinkedList {
     return false;
   }
 
-  insertAt(index, value) {
-    if (index > this.size) return "Invalid Index";
-    let node = this.head;
-    while (index-- > 1) {
-      node = node.next;
-    }
-    const newNode = new Node(value);
-    [newNode.next, node.next] = [node.next, newNode];
-    this.size += 1;
-    return newNode;
-  }
-
-  removeAt(index) {
-    if (index > this.size) return "Invalid Index";
-    let node = this.head;
-    while (index-- > 1) {
-      node = node.next;
-    }
-    const tmp = node.next;
-    node.next = tmp.next;
-    this.size -= 1;
-    return tmp;
-  }
-
   toString(node = this.head) {
     let nodeString = "";
     while (node !== null) {
@@ -110,14 +125,5 @@ export default class LinkedList {
     }
     nodeString += "(null)";
     return nodeString;
-  }
-
-  print(node = this.head) {
-    const nodeArray = [];
-    while (node !== null) {
-      nodeArray.push(node.data);
-      node = node.next;
-    }
-    console.log(nodeArray);
   }
 }

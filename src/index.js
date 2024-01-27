@@ -18,3 +18,19 @@ map.set("dictionary", 175875);
 map.set("library", 1756235);
 map.set("mapset", 1723455);
 map.set("binary", 163755);
+
+console.log("get library key:", map.get("library"));
+console.log("has mapset key:", map.has("mapset"));
+console.log("has asdgw4 key:", map.has("asdgw4"));
+console.log("removing library", map.remove("library"));
+console.log("has library key:", map.has("library"));
+console.log("Length:", map.length);
+
+console.log("get nod value:", map.get("nod"));
+map.set("nod", 800);
+console.log("Adding nod again with different value..");
+console.log("get nod value:", map.get("nod"));
+
+console.log("hashmap values:", map.values());
+console.log("hashmap entries:");
+console.table(map.entries());
