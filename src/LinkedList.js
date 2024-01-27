@@ -34,10 +34,10 @@ export default class LinkedList {
     this.size += 1;
   }
 
-  get(key) {
+  get(key, dataType = "value") {
     let node = this.head;
     while (node !== null) {
-      if (key === node.data.key) return node.data.value;
+      if (key === node.data.key) return node.data[dataType];
       node = node.next;
     }
     return null;
